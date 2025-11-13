@@ -43,6 +43,7 @@ fun main(){
     for(partida in 0 until partides) {
         var acumuladorCPU: Int = 0
         var tiradaActual: Int = 0
+        val tiradesCPU: MutableList<String> = mutableListOf() // Llista per guardar les tirades de la CPU
 
         for (tirada in 0 until tiradesGuardades[partida].size - 1) {
             /** Tirades persona **/
@@ -50,15 +51,20 @@ fun main(){
             tiradaActual = Random.nextInt(1, 6 + 1)
             println("Has tret un ${CARES_DAU[tiradaActual-1]} !")
 
-            // Guardem la tirada
+            // Guardem la tirada de l'usuari
             tiradesGuardades[partida][tirada] = tiradaActual
 
-            // Acumulem el sumatori a l'última columna de la fila
+            // Acumulem la tirada a l'última columna
             tiradesGuardades[partida][tiradesPerPartida] += tiradaActual
 
             /** Tirades CPU **/
-            acumuladorCPU += Random.nextInt(1, 6 + 1)
+            val tiradaCPU = Random.nextInt(1, 6 + 1)
+            tiradesCPU.add(CARES_DAU[tiradaCPU - 1]) // Afegim la tirada de la CPU a la llista
+            acumuladorCPU += tiradaCPU
         }
+
+
+        println("Tirades de la CPU: ${tiradesCPU.joinToString(", ")}")
 
         println("Partida acabada!")
         println("Tu has aconseguit ${tiradesGuardades[partida][tiradesPerPartida]} punts")
