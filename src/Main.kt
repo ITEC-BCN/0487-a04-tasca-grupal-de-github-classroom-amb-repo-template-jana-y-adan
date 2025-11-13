@@ -6,11 +6,13 @@ fun main(){
 
     var partides: Int?
     var tiradesPerPartida: Int?
-
+    println("-------------------------------------")
+    println("Benvingut/da al joc dels daus.")
     println(DAUS)
-    println("Benvingut/da al joc dels daus.\nPer guanyar cada partida, la suma dels punts de les teves tirades dels teus daus ha de ser superior a la de la CPU")
+    println("=====================================")
+    println("Per guanyar cada partida, la suma dels punts de les teves tirades dels teus daus ha de ser superior a la de la CPU")
     println(DAUS)
-
+    println("=====================================")
     // Llegim el número de partides que volem jugar
     do {
         println("Quantes partides vols jugar? (de 1 a 3)")
@@ -39,6 +41,11 @@ fun main(){
     // Inicialitzem la matriu de partides files i (tiradesPerPartida + 1) columnes
     tiradesGuardades = Array(partides){IntArray((tiradesPerPartida + 1)) }
 
+    // Variables per comptar els resultats
+    var guanyades: Int = 0
+    var perdudes: Int = 0
+    var empatades: Int = 0
+
     // Repetim tantes vegades com partides
     for(partida in 0 until partides) {
         var acumuladorCPU: Int = 0
@@ -50,7 +57,7 @@ fun main(){
             println("Tira el dau! (Intent $tirada)")
             tiradaActual = Random.nextInt(1, 6 + 1)
             println("Has tret un ${CARES_DAU[tiradaActual-1]} !")
-
+            println("=====================================")
             // Guardem la tirada de l'usuari
             tiradesGuardades[partida][tirada] = tiradaActual
 
@@ -72,10 +79,28 @@ fun main(){
 
         if (tiradesGuardades[partida][tiradesPerPartida] > acumuladorCPU){
             println("Has guanyat!")
+            guanyades++
         }else if (tiradesGuardades[partida][tiradesPerPartida] < acumuladorCPU){
             println("Has perdut!")
+            perdudes++
         }else{
             println("Heu empatat!")
+            empatades++
         }
+        println("=====================================")
     }
+
+    println("=====================================")
+
+    // Resultats:
+    println("Resultats de les partides jugades: $partides")
+    println("-------------------------------------")
+    println("Partides guanyades: $guanyades")
+    println("Partides perdudes: $perdudes")
+    println("Partides empatades: $empatades")
+
+    // Percentatge de les partides guanyades
+    val percentGuanyades = (guanyades.toDouble() / partides) * 100
+    println("Percentatge de totes les partides guanyades: %.2f%%".format(percentGuanyades))
+    println("=====================================")
 }
